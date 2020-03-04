@@ -85,6 +85,7 @@ dependencies {
     compile "com.netflix.governator:governator-core"
     compile "com.netflix.governator:governator-servlet"
     compile "com.netflix.governator:governator-jersey"
+    compile 'org.eclipse.jetty:jetty-server:9.4.3.v20170317'
 
     // This is here because it's the only reliable way to make IDEs pick up the proper dependencies when running
     // a main() function while also not packaging the dependencies to be deployed on EC2.

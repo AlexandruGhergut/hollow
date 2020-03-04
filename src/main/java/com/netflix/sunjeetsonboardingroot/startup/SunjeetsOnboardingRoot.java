@@ -3,6 +3,7 @@ package com.netflix.sunjeetsonboardingroot.startup;
 import com.google.inject.Injector;
 import com.netflix.governator.InjectorBuilder;
 import com.netflix.governator.guice.servlet.WebApplicationInitializer;
+import com.netflix.sunjeetsonboardingroot.resource.v1.ConsumeANamespace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,10 +18,12 @@ public class SunjeetsOnboardingRoot implements WebApplicationInitializer {
     private static final Logger logger = LoggerFactory.getLogger(SunjeetsOnboardingRoot.class);
 
     public static void main(String[] args) throws Exception {
-        logger.info("SNAP: Stepped in main");
+        logger.info("SNAP: Stepped in main, sleeping endlessly...");
 
+        while (true) {
+            Thread.sleep(1000);
+        }
         // publishEndlessly();
-
     }
 
     @Override

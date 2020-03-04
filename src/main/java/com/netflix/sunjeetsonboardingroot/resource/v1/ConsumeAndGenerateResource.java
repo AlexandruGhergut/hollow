@@ -24,6 +24,8 @@ public class ConsumeAndGenerateResource {
 
     public static final String TEST_NAMESPACE = "vms.popularViewables.topN";
     public static final String TEST_FILE_TOPN = "/Users/sunjeets/workspace/onboarding/topN";
+    public static final String TEST_FILE_FEATHER = "/Users/sunjeets/workspace/onboarding/vms-feather.snapshot";
+    public static final String TEST_FILE_FEATHER_OVERRIDE = "/Users/sunjeets/workspace/onboarding/vms-feather_override";
     private static final Logger logger = LoggerFactory.getLogger(ConsumeAndGenerateResource.class);
 
     private AppCinderConsumer cinderConsumer;
@@ -36,6 +38,7 @@ public class ConsumeAndGenerateResource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public Response queryConsume() throws Exception {
+
         logger.info("SNAP: Start querying");
         //HollowFilterConfig hfc = new HollowFilterConfig();
         //hfc.addType("Actor");
@@ -74,7 +77,7 @@ public class ConsumeAndGenerateResource {
         // uiServer.join();
 
         HollowBlobWriter writer = new HollowBlobWriter(writeState);
-        OutputStream os = new BufferedOutputStream(new FileOutputStream(TEST_FILE_TOPN));
+        OutputStream os = new BufferedOutputStream(new FileOutputStream(TEST_FILE_FEATHER_OVERRIDE));
         writer.writeSnapshot(os);
         os.flush();
 

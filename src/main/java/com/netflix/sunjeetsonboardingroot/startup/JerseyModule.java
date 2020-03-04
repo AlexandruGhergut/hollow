@@ -1,18 +1,15 @@
 package com.netflix.sunjeetsonboardingroot.startup;
 
 import com.google.common.collect.Maps;
+import com.netflix.governator.guice.jersey.GovernatorServletContainer;
 import com.netflix.governator.providers.Advises;
-import com.netflix.sunjeetsonboardingroot.resource.v1.SunjeetsOnboardingRootResource;
 import com.netflix.runtime.health.servlet.HealthStatusServlet;
 import com.netflix.server.base.NFFilter;
+import com.netflix.sunjeetsonboardingroot.resource.v1.SunjeetsOnboardingRootResource;
 import com.sun.jersey.api.core.DefaultResourceConfig;
-import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.guice.JerseyServletModule;
-import com.netflix.governator.guice.jersey.GovernatorServletContainer;
-
 import java.util.Map;
 import java.util.function.UnaryOperator;
-
 import javax.inject.Named;
 import javax.inject.Singleton;
 import org.slf4j.Logger;
@@ -29,6 +26,7 @@ public final class JerseyModule extends JerseyServletModule {
     public static final String CONSUME_PATH = "consume";
     public static final String CONSUME_AND_GENERATE_PATH = "consume-and-generate-files";
     public static final String CONSUME_FROM_GENERATED_PATH = "consume-from-generated-files";
+    public static final String CONSUME_A_NAMESPACE = "consume-a-namespace";
 
     private static final Logger logger = LoggerFactory.getLogger(JerseyModule.class);
 
@@ -57,6 +55,7 @@ public final class JerseyModule extends JerseyServletModule {
         serveRegex("(/" + CONSUME_PATH + ")").with(GovernatorServletContainer.class);
         serveRegex("(/" + CONSUME_AND_GENERATE_PATH + ")").with(GovernatorServletContainer.class);
         serveRegex("(/" + CONSUME_FROM_GENERATED_PATH + ")").with(GovernatorServletContainer.class);
+        serveRegex("(/" + CONSUME_A_NAMESPACE + "(/.*)?)").with(GovernatorServletContainer.class);
     }
 
     @Advises

@@ -1,28 +1,30 @@
 package com.netflix.sunjeetsonboardingroot.startup;
 
+import static com.netflix.sunjeetsonboardingroot.startup.Namespaces.FEW_NAMESPACES;
+import static com.netflix.sunjeetsonboardingroot.startup.Namespaces.NAMESPACES;
+import static com.netflix.sunjeetsonboardingroot.startup.Namespaces.NAMESPACE_VERSIONS;
+
 import com.google.inject.AbstractModule;
-// Common module dependencies
 import com.google.inject.Provides;
 import com.netflix.archaius.ConfigProxyFactory;
 import com.netflix.cinder.lifecycle.CinderConsumerModule;
-import javax.inject.Singleton;
-
-// Server dependencies
 import com.netflix.cinder.lifecycle.CinderProducerModule;
 import com.netflix.runtime.health.guice.HealthModule;
 import com.netflix.runtime.lifecycle.RuntimeCoreModule;
-
+import com.netflix.runtime.swagger.jaxrs.JaxrsSwaggerModule;
+import com.netflix.runtime.swagger.lifecycle.SwaggerServletModule;
+import com.netflix.runtime.swagger.servlets.GuiceServletSwaggerModule;
 import com.netflix.sunjeetsonboardingroot.config.SunjeetsOnboardingRootConfig;
 import com.netflix.sunjeetsonboardingroot.health.CustomHealthIndicator;
-import com.netflix.sunjeetsonboardingroot.model.SunjeetsOnboardingRootInMemoryDao;
 import com.netflix.sunjeetsonboardingroot.model.SunjeetsOnboardingRootDao;
-
-
-import com.netflix.runtime.swagger.jaxrs.JaxrsSwaggerModule;
-import com.netflix.runtime.swagger.servlets.GuiceServletSwaggerModule;
-import com.netflix.runtime.swagger.lifecycle.SwaggerServletModule;
+import com.netflix.sunjeetsonboardingroot.model.SunjeetsOnboardingRootInMemoryDao;
+import com.netflix.sunjeetsonboardingroot.resource.v1.ConsumeANamespace;
+import javax.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+// Common module dependencies
+// Server dependencies
 
 /**
  * This is the "main" module where we wire everything up. If you see this module getting overly
@@ -52,11 +54,18 @@ public final class SunjeetsOnboardingRootModule extends AbstractModule {
         install(new CinderProducerModule());
         install(new CinderConsumerModule());
 
-        // Uncomment to load the Cassandra client
-        // install(new CassandraModule());
-
-        logger.info("SNAP: binding to In Memory DAO for greetings");
+        logger.info("Binding to In Memory DAO for greetings");
         bind(SunjeetsOnboardingRootDao.class).to(SunjeetsOnboardingRootInMemoryDao.class);
+
+        logger.info("Configuring SunjeetsOnboardingRootModule...");
+        try {
+            ConsumeANamespace.populateReadStates(FEW_NAMESPACES, NAMESPACE_VERSIONS);
+        } catch(Exception e) {
+            logger.info("SNAP: Exception starting up: " + e);
+        } finally {
+            logger.info("Done configuring SunjeetsOnboardingRootModule");
+        }
+
         // Swap this for the InMemoryDao bind above to use the Cassandra client instead
         // bind(SunjeetsOnboardingRootDao.class).to(SunjeetsOnboardingRootCassandraDao.class);
     }
