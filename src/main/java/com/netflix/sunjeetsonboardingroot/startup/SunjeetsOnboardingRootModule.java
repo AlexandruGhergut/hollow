@@ -1,6 +1,5 @@
 package com.netflix.sunjeetsonboardingroot.startup;
 
-import static com.netflix.sunjeetsonboardingroot.startup.Namespaces.FEW_NAMESPACES;
 import static com.netflix.sunjeetsonboardingroot.startup.Namespaces.NAMESPACES;
 import static com.netflix.sunjeetsonboardingroot.startup.Namespaces.NAMESPACE_VERSIONS;
 
@@ -59,7 +58,7 @@ public final class SunjeetsOnboardingRootModule extends AbstractModule {
 
         logger.info("Configuring SunjeetsOnboardingRootModule...");
         try {
-            ConsumeANamespace.populateReadStates(FEW_NAMESPACES, NAMESPACE_VERSIONS);
+            ConsumeANamespace.populateReadStates(NAMESPACES, NAMESPACE_VERSIONS);
         } catch(Exception e) {
             logger.info("SNAP: Exception starting up: " + e);
         } finally {
