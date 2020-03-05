@@ -46,7 +46,8 @@ public class ConsumeANamespace {
         namespaceToPort = new HashMap<>();
         int incrementingPort = 50000;
 
-        File blobCache = new File("/tmp/blob-cache");   // SNAP: change path
+        File blobCache = new File("/var/log/blob-cache");
+        // File blobCache = new File("/tmp/blob-cache"); // SNAP: change path
         boolean dirCreated = blobCache.mkdir();
         if (dirCreated == true) {
             logger.info("SNAP: Created directory " + blobCache.getPath());
@@ -57,8 +58,10 @@ public class ConsumeANamespace {
         GutenbergFileConsumer gutenberg = GutenbergFileConsumer.localProxyForProdEnvironment();
 
         logger.info("SNAP: Starting explorers for configured namespaces");
+        int cnt = 0;
         for (String namespace : namespaces) {
-            logger.info("SNAP: Starting explorer for namespace " + namespace);
+            cnt ++;
+            logger.info("SNAP: [" + cnt + "/" + namespaces.size() + "] Starting explorer for namespace " + namespace);
             HollowConsumer consumer = HollowConsumer.withBlobRetriever(new NFHollowBlobRetriever(gutenberg, namespace))
                     .withLocalBlobStore(blobCache)  // SNAP: local blob store is required for LZ4 decompression
                     .build();

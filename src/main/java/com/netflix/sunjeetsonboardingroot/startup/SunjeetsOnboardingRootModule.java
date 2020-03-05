@@ -60,7 +60,7 @@ public final class SunjeetsOnboardingRootModule extends AbstractModule {
         try {
             ConsumeANamespace.populateReadStates(NAMESPACES, NAMESPACE_VERSIONS);
         } catch(Exception e) {
-            logger.info("SNAP: Exception starting up: " + e);
+            logger.info("SNAP: Exception starting up: ", e);
         } finally {
             logger.info("Done configuring SunjeetsOnboardingRootModule");
         }

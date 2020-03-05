@@ -12,10 +12,11 @@ public class Namespaces {
         put("vmsconverter-muon", 20200304220218561l);
         put("astrid.v1", 20200304214554088l);
         put("gatekeeper2_status_prod", 20200304215735102l);
+        put("mce_viewables", 20200305133520820l);
 
     }};
 
-    public static final List<String> FEW_NAMESPACES = Arrays.asList("vms.popularViewables.topN", "cuptokenrecords.v3"); // "vms-feather"
+    public static final List<String> FEW_NAMESPACES = Arrays.asList("vms.popularViewables.topN", "cuptokenrecords.v3");     // "vms-feather" // "mce_viewables"
 
     public static final List<String> NAMESPACES = Arrays.asList(
             "snoke-mapper-stage",
